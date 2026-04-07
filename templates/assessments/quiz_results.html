@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Quiz Results — AI Personal Tutor{% endblock %}
+{% block content %}
+
+<div class="page-header fade-in">
+  <h1 class="page-title">📊 Quiz Results</h1>
+  <p class="page-subtitle">{{ attempt.quiz.subject.name }} • {{ attempt.attempt_date|date:"F d, Y" }}</p>
+</div>
+
+<!-- Score Card -->
+<div class="card fade-in" style="text-align:center;margin-bottom:1.5rem;">
+  <!-- SVG Score Ring -->
+  <div class="score-ring-wrap">
+    <div class="score-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <defs>
+          <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#7C3AED"/>
+            <stop offset="100%" style="stop-color:#06B6D4"/>
+          </linearGradient>
+        </defs>
+        <circle class="score-ring-bg" cx="70" cy="70" r="60"/>
+        <circle class="score-ring-fill" cx="70" cy="70" r="60"
+          stroke-dasharray="{{ attempt.percentage|floatformat:0|add:'0' }} 1000"
+          stroke-dashoffset="0"
+          style="stroke-dasharray: calc({{ attempt.percentage }} * 3.77) 377; stroke-dashoffset: 0;"/>
+      </svg>
+      <div class="score-ring-text">
+        <div class="score-ring-pct">{{ attempt.percentage|floatformat:0 }}%</div>
+        <div class="score-ring-label">Score</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:1.5rem;font-weight:700;margin-bottom:0.25rem;">
+    {{ attempt.score }} / {{ attempt.total_questions }} Correct
+  </div>
+
+  <div style="margin:0.75rem auto;">
+    <span class="skill-badge {{ attempt.skill_level }} badge" style="font-size:0.95rem;padding:0.4rem 1.25rem;">
+      🏅 {{ attempt.skill_level|capfirst }} Level
+    </span>
+  </div>
+
+  <div style="display:flex;gap:1rem;justify-content:center;margin-top:1rem;">
+    <a href="{% url 'subjects:detail' attempt.quiz.subject.pk %}" class="btn btn-secondary">← Back to Subject</a>
+    <a href="{% url 'learning:learning_path' attempt.quiz.subject.pk %}" class="btn btn-primary">📈 View Learning Path</a>
+  </div>
+</div>
+
+<!-- Weak Topics -->
+{% if weak_topics %}
+<div class="card fade-in" style="margin-bottom:1.25rem;">
+  <div class="card-header">
+    <h2 class="card-title">⚠️ Topics to Focus On</h2>
+  </div>
+  <div>
+    {% for topic in weak_topics %}
+    <span class="topic-tag weak">{{ topic.topic_name }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Question Review -->
+<div class="card fade-in">
+  <div class="card-header">
+    <h2 class="card-title">📝 Question Review</h2>
+  </div>
+
+  {% for result in question_results %}
+  <div class="quiz-question-card" style="margin-bottom:0.75rem;">
+    <div class="question-number">
+      Q{{ forloop.counter }}
+      {% if result.is_correct %}
+        <span class="badge badge-success">✅ Correct</span>
+      {% else %}
+        <span class="badge badge-danger">❌ Incorrect</span>
+      {% endif %}
+      {% if result.question.topic_tag %}• {{ result.question.topic_tag }}{% endif %}
+    </div>
+    <div class="question-text">{{ result.question.question_text }}</div>
+    <div class="options-grid">
+      {% for key, value in result.options.items %}
+      <div class="option-label
+        {% if key == result.question.correct_answer %}correct{% elif key == result.selected and not result.is_correct %}wrong{% endif %}
+      " style="cursor:default;">
+        <span class="option-key">{{ key }}</span>
+        <span>{{ value }}</span>
+        {% if key == result.question.correct_answer %}<span style="margin-left:auto;font-size:0.75rem;font-weight:700;">✓ Correct</span>{% endif %}
+        {% if key == result.selected and not result.is_correct %}<span style="margin-left:auto;font-size:0.75rem;font-weight:700;">Your answer</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+// Animate score ring
+window.addEventListener('load', () => {
+  const pct = {{ attempt.percentage }};
+  const fill = document.querySelector('.score-ring-fill');
+  if (fill) {
+    const circumference = 2 * Math.PI * 60;
+    fill.style.strokeDasharray = `${(pct / 100) * circumference} ${circumference}`;
+  }
+  
+  // Parse markdown for all question texts
+  if (window.marked) {
+    document.querySelectorAll('.question-text').forEach(el => {
+      // Decode HTML entities if any, then parse
+      const text = el.textContent;
+      el.innerHTML = marked.parse(text);
+    });
+  }
+});
+</script>
+{% endblock %}

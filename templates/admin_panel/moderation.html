@@ -1,0 +1,36 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Content Moderation{% endblock %}
+{% block page_title %}🚫 Content Moderation{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent Chatbot Messages (Last 100)</h2>
+    <span class="badge badge-secondary">{{ messages|length }} messages</span>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Student</th><th>Subject</th><th>Message</th><th>Time</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        {% for msg in messages %}
+        <tr>
+          <td style="font-size:0.85rem;">{{ msg.session.user.email }}</td>
+          <td style="font-size:0.8rem;">{{ msg.session.subject.name|default:"General" }}</td>
+          <td style="max-width:300px;font-size:0.875rem;">{{ msg.content|truncatechars:100 }}</td>
+          <td style="font-size:0.8rem;color:var(--text-secondary);">{{ msg.timestamp|date:"M d, H:i" }}</td>
+          <td>
+            <form method="post" action="{% url 'admin_panel:delete_message' msg.pk %}" class="confirm-delete-form">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-danger">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No chat messages yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

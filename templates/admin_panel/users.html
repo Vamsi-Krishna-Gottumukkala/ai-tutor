@@ -1,0 +1,47 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Manage Users{% endblock %}
+{% block page_title %}👥 Manage Users{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">All Students ({{ users.count }})</h2>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Level</th><th>Joined</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td><strong>{{ u.get_full_name|default:u.username }}</strong></td>
+          <td>{{ u.email }}</td>
+          <td><span class="badge {% if u.skill_level == 'advanced' %}badge-success{% elif u.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">{{ u.skill_level|capfirst }}</span></td>
+          <td style="font-size:0.8rem;color:var(--text-secondary);">{{ u.date_joined|date:"M d, Y" }}</td>
+          <td>
+            <span class="badge {% if u.is_active %}badge-success{% else %}badge-danger{% endif %}">
+              {% if u.is_active %}Active{% else %}Blocked{% endif %}
+            </span>
+          </td>
+          <td style="display:flex;gap:0.4rem;">
+            <form method="post" action="{% url 'admin_panel:toggle_user' u.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-sm {% if u.is_active %}btn-danger{% else %}btn-success{% endif %}">
+                {% if u.is_active %}Block{% else %}Activate{% endif %}
+              </button>
+            </form>
+            <form method="post" action="{% url 'admin_panel:delete_user' u.pk %}" class="confirm-delete-form">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No students registered yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

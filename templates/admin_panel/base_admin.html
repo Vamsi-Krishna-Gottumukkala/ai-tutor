@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Admin Panel{% endblock %} — AI Tutor</title>
+  {% load static %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+
+{% if messages %}
+<div class="message-container">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags|default:'info' }}" data-auto-dismiss>{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="admin-wrapper">
+  <!-- Admin Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <div class="admin-brand-name">
+        🎓 AI Tutor
+        <span class="admin-brand-badge">Admin</span>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <div class="admin-nav-label">Overview</div>
+      <a href="{% url 'admin_panel:dashboard' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+        📊 Dashboard
+      </a>
+
+      <div class="admin-nav-label" style="margin-top:0.5rem;">Manage</div>
+      <a href="{% url 'admin_panel:users' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'users' %}active{% endif %}">
+        👥 Users
+      </a>
+      <a href="{% url 'admin_panel:subjects' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'subjects' %}active{% endif %}">
+        📚 Subjects
+      </a>
+      <a href="{% url 'admin_panel:quizzes' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'quizzes' %}active{% endif %}">
+        🧠 Quizzes
+      </a>
+
+      <div class="admin-nav-label" style="margin-top:0.5rem;">Analytics</div>
+      <a href="{% url 'admin_panel:performance' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'performance' %}active{% endif %}">
+        📈 Performance
+      </a>
+      <a href="{% url 'admin_panel:moderation' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'moderation' %}active{% endif %}">
+        🚫 Moderation
+      </a>
+
+      <div class="admin-nav-label" style="margin-top:0.5rem;">Account</div>
+      <a href="{% url 'accounts:logout' %}" class="admin-nav-item">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Admin Main Content -->
+  <main class="admin-main">
+    <div class="admin-header">
+      <h1 style="font-size:1.4rem;font-weight:700;">{% block page_title %}Dashboard{% endblock %}</h1>
+      <div style="font-size:0.85rem;color:var(--text-secondary);">Logged in as {{ user.email }}</div>
+    </div>
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

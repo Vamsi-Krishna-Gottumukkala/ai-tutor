@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}{{ subject.name }} — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in" style="display:flex;align-items:center;justify-content:space-between;">
+  <div>
+    <a href="{% url 'subjects:list' %}" style="font-size:0.85rem;color:var(--text-secondary);">← My Subjects</a>
+    <h1 class="page-title" style="margin-top:0.25rem;">{{ subject.name }}</h1>
+    {% if subject.description %}<p class="page-subtitle">{{ subject.description }}</p>{% endif %}
+  </div>
+  <a href="{% url 'subjects:delete' subject.pk %}" class="btn btn-danger btn-sm">🗑 Delete</a>
+</div>
+
+<div class="grid-2 fade-in">
+  <!-- Topics -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">🏷 Extracted Topics</h2>
+      <span class="badge badge-secondary">{{ topics.count }} topics</span>
+    </div>
+    {% if topics %}
+      <div style="line-height:2;">
+        {% for topic in topics %}
+        <span class="topic-tag">{{ topic.topic_name }}</span>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="color:var(--text-muted);font-size:0.875rem;">No topics extracted. Make sure you entered syllabus text or a valid PDF.</p>
+    {% endif %}
+  </div>
+
+  <!-- Actions -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">🎯 Actions</h2>
+    </div>
+
+    <!-- Basic Test -->
+    <div style="padding:1rem;background:var(--primary-lighter);border-radius:var(--radius-sm);margin-bottom:1rem;">
+      <div style="font-weight:600;margin-bottom:0.4rem;">🧠 Basic Assessment Test</div>
+      <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">
+        {% if has_basic_test %}
+          ✅ Completed! You can retake or view dashboard results.
+        {% else %}
+          Take your basic test to unlock flashcards, daily quizzes, and recommendations.
+        {% endif %}
+      </div>
+      <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary">
+        {% if has_basic_test %}🔁 Retake Test{% else %}▶ Start Basic Test{% endif %}
+      </a>
+    </div>
+
+    {% if has_basic_test %}
+    <div style="display:flex;flex-direction:column;gap:0.6rem;">
+      <a href="{% url 'learning:learning_path' subject.pk %}" class="btn btn-secondary">📈 View Learning Path</a>
+      <a href="{% url 'learning:flashcards' subject.pk %}" class="btn btn-secondary">🃏 Flashcards</a>
+      <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-secondary">📅 Daily Quiz</a>
+      <a href="{% url 'chatbot:chat_subject' subject.pk %}" class="btn btn-secondary">💬 Ask AI Tutor</a>
+    </div>
+    {% else %}
+    <div style="display:flex;flex-direction:column;gap:0.6rem;opacity:0.4;">
+      <button class="btn btn-secondary" disabled>📈 Learning Path (locked)</button>
+      <button class="btn btn-secondary" disabled>🃏 Flashcards (locked)</button>
+      <button class="btn btn-secondary" disabled>📅 Daily Quiz (locked)</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Latest Attempt -->
+{% if latest_attempt %}
+<div class="card fade-in" style="margin-top:1.25rem;">
+  <div class="card-header">
+    <h2 class="card-title">📊 Latest Performance</h2>
+    <span class="badge {% if latest_attempt.skill_level == 'advanced' %}badge-success{% elif latest_attempt.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">
+      {{ latest_attempt.skill_level|capfirst }}
+    </span>
+  </div>
+  <div class="grid-3">
+    <div style="text-align:center;padding:1rem;">
+      <div style="font-size:2rem;font-weight:700;color:var(--primary);">{{ latest_attempt.score }}/{{ latest_attempt.total_questions }}</div>
+      <div style="color:var(--text-secondary);font-size:0.8rem;">Score</div>
+    </div>
+    <div style="text-align:center;padding:1rem;">
+      <div style="font-size:2rem;font-weight:700;color:var(--success);">{{ latest_attempt.percentage }}%</div>
+      <div style="color:var(--text-secondary);font-size:0.8rem;">Percentage</div>
+    </div>
+    <div style="text-align:center;padding:1rem;">
+      <div style="font-size:0.9rem;margin-top:0.5rem;">
+        <a href="{% url 'assessments:quiz_results' latest_attempt.pk %}" class="btn btn-outline">View Results</a>
+      </div>
+      <div style="color:var(--text-secondary);font-size:0.8rem;margin-top:0.4rem;">{{ latest_attempt.attempt_date|date:"M d, Y" }}</div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Quiz History — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">🧠 Quiz History</h1>
+  <p class="page-subtitle">All your quiz attempts across subjects</p>
+</div>
+
+{% if attempts %}
+<div class="card fade-in">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Subject</th><th>Type</th><th>Score</th><th>%</th><th>Level</th><th>Date</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for attempt in attempts %}
+        <tr>
+          <td><strong>{{ attempt.quiz.subject.name }}</strong></td>
+          <td><span class="badge badge-secondary">{{ attempt.quiz.get_quiz_type_display }}</span></td>
+          <td>{{ attempt.score }}/{{ attempt.total_questions }}</td>
+          <td>{{ attempt.percentage }}%</td>
+          <td><span class="badge {% if attempt.skill_level == 'advanced' %}badge-success{% elif attempt.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">{{ attempt.skill_level|capfirst }}</span></td>
+          <td style="font-size:0.8rem;color:var(--text-secondary);">{{ attempt.attempt_date|date:"M d, Y" }}</td>
+          <td><a href="{% url 'assessments:quiz_results' attempt.pk %}" class="btn btn-secondary btn-sm">Review</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="card fade-in">
+  <div class="empty-state">
+    <div class="empty-state-icon">🧠</div>
+    <div class="empty-state-title">No Quiz Attempts Yet</div>
+    <div class="empty-state-text">Take your first quiz to see your history here</div>
+    <a href="{% url 'subjects:list' %}" class="btn btn-primary">View My Subjects</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

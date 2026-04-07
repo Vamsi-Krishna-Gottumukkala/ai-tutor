@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Delete Subject — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">🗑 Delete Subject</h1>
+</div>
+<div class="card fade-in" style="max-width:500px;">
+  <div style="text-align:center;padding:1.5rem 0;">
+    <div style="font-size:3rem;margin-bottom:1rem;">⚠️</div>
+    <h2 style="font-weight:700;margin-bottom:0.5rem;">Are you sure?</h2>
+    <p style="color:var(--text-secondary);margin-bottom:1.5rem;">
+      This will permanently delete <strong>{{ subject.name }}</strong> and all its quizzes, flashcards, and learning data.
+    </p>
+    <div style="display:flex;gap:1rem;justify-content:center;">
+      <a href="{% url 'subjects:detail' subject.pk %}" class="btn btn-secondary btn-lg">Cancel</a>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-lg">Yes, Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

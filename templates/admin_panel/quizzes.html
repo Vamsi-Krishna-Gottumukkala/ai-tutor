@@ -1,0 +1,28 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}View Quizzes{% endblock %}
+{% block page_title %}🧠 Generated Quizzes{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Subject</th><th>Student</th><th>Type</th><th>Questions</th><th>Status</th><th>Generated</th></tr>
+      </thead>
+      <tbody>
+        {% for quiz in quizzes %}
+        <tr>
+          <td><strong>{{ quiz.subject.name }}</strong></td>
+          <td style="font-size:0.85rem;">{{ quiz.user.email }}</td>
+          <td><span class="badge badge-secondary">{{ quiz.get_quiz_type_display }}</span></td>
+          <td>{{ quiz.total_questions }} Qs</td>
+          <td><span class="badge {% if quiz.is_completed %}badge-success{% else %}badge-warning{% endif %}">{% if quiz.is_completed %}Completed{% else %}Pending{% endif %}</span></td>
+          <td style="font-size:0.8rem;color:var(--text-secondary);">{{ quiz.generated_at|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No quizzes generated yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

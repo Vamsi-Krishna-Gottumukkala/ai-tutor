@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — AI Personal Tutor{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Score Progress Chart
+  const scoreCtx = document.getElementById('scoreChart');
+  if (scoreCtx) {
+    new Chart(scoreCtx, {
+      type: 'line',
+      data: {
+        labels: {{ score_labels|safe }},
+        datasets: [{
+          label: 'Score %',
+          data: {{ score_data|safe }},
+          borderColor: '#7C3AED',
+          backgroundColor: 'rgba(124, 58, 237, 0.08)',
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: '#7C3AED',
+          pointRadius: 5,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: 0, max: 100, grid: { color: '#F1F5F9' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">👋 Hello, {{ user.display_name }}!</h1>
+  <p class="page-subtitle">Here's your learning overview for today</p>
+</div>
+
+<!-- Stats -->
+<div class="stat-grid fade-in fade-in-delay-1">
+  <div class="stat-card">
+    <div class="stat-icon violet">📚</div>
+    <div>
+      <div class="stat-value">{{ subjects.count }}</div>
+      <div class="stat-label">Subjects</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon cyan">🧠</div>
+    <div>
+      <div class="stat-value">{{ total_attempts }}</div>
+      <div class="stat-label">Quiz Attempts</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green">📈</div>
+    <div>
+      <div class="stat-value">{{ avg_score }}%</div>
+      <div class="stat-label">Average Score</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon amber">🏅</div>
+    <div>
+      <div class="stat-value" style="font-size:1.1rem;margin-top:4px;">
+        <span class="skill-badge {{ user.skill_level }}">{{ user.skill_level|capfirst }}</span>
+      </div>
+      <div class="stat-label">Skill Level</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2 fade-in fade-in-delay-2">
+  <!-- Score Chart -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">📊 Score Progress</h2>
+    </div>
+    {% if score_data %}
+    <canvas id="scoreChart" height="180"></canvas>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">📊</div>
+      <div class="empty-state-title">No quiz data yet</div>
+      <div class="empty-state-text">Complete a basic test to see your progress</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Weak Topics -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">⚠️ Areas to Improve</h2>
+    </div>
+    {% if weak_topics %}
+      {% for topic in weak_topics %}
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:0.875rem;">{{ topic.topic_name }}</span>
+        <span class="badge badge-danger">Missed {{ topic.miss_count }}x</span>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">✅</div>
+      <div class="empty-state-title">No weak areas yet</div>
+      <div class="empty-state-text">Take a quiz to identify your weak topics</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Subjects -->
+<div class="card fade-in fade-in-delay-3" style="margin-top:1.25rem;">
+  <div class="card-header">
+    <h2 class="card-title">📚 My Subjects</h2>
+    <a href="{% url 'subjects:create' %}" class="btn btn-primary btn-sm">+ Add Subject</a>
+  </div>
+
+  {% if subjects %}
+  <div class="grid-3" style="margin-top:0.5rem;">
+    {% for subject in subjects %}
+    <a href="{% url 'subjects:detail' subject.pk %}" class="card card-interactive" style="text-decoration:none;">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+        <div class="stat-icon violet" style="width:40px;height:40px;font-size:1rem;">📖</div>
+        <div>
+          <div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">{{ subject.name }}</div>
+          <div style="font-size:0.75rem;color:var(--text-secondary);">{{ subject.topics.count }} topics</div>
+        </div>
+      </div>
+      {% with attempt=subject.latest_attempt %}
+      {% if attempt %}
+        <div class="progress-bar-wrap" style="margin-bottom:0.4rem;">
+          <div class="progress-bar-fill" data-pct="{{ attempt.percentage }}" style="width:0%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-secondary);">
+          <span>{{ attempt.percentage }}%</span>
+          <span class="badge badge-{% if attempt.skill_level == 'advanced' %}success{% elif attempt.skill_level == 'intermediate' %}primary{% else %}warning{% endif %}">{{ attempt.skill_level|capfirst }}</span>
+        </div>
+      {% else %}
+        <div style="font-size:0.8rem;color:var(--text-muted);">No quiz taken yet</div>
+        <div style="margin-top:0.5rem;">
+          <span class="badge badge-warning">Basic test pending</span>
+        </div>
+      {% endif %}
+      {% endwith %}
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state-icon">📚</div>
+    <div class="empty-state-title">No subjects yet</div>
+    <div class="empty-state-text">Add your first subject to start learning</div>
+    <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Your First Subject</a>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Recent Attempts -->
+{% if recent_attempts %}
+<div class="card fade-in" style="margin-top:1.25rem;">
+  <div class="card-header">
+    <h2 class="card-title">🕐 Recent Quiz Attempts</h2>
+    <a href="{% url 'assessments:history' %}" class="btn btn-secondary btn-sm">View All</a>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th><th>Type</th><th>Score</th><th>Level</th><th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for attempt in recent_attempts %}
+        <tr>
+          <td><strong>{{ attempt.quiz.subject.name }}</strong></td>
+          <td><span class="badge badge-secondary">{{ attempt.quiz.get_quiz_type_display }}</span></td>
+          <td>{{ attempt.score }}/{{ attempt.total_questions }} ({{ attempt.percentage }}%)</td>
+          <td><span class="badge {% if attempt.skill_level == 'advanced' %}badge-success{% elif attempt.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">{{ attempt.skill_level|capfirst }}</span></td>
+          <td style="color:var(--text-secondary);font-size:0.8rem;">{{ attempt.attempt_date|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

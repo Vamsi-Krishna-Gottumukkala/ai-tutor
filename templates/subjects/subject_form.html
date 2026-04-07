@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Add Subject — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">📚 Add New Subject</h1>
+  <p class="page-subtitle">Enter your subject details and syllabus to get started</p>
+</div>
+
+<div class="card fade-in" style="max-width:700px;">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="form-label">Subject Name *</label>
+      {{ form.name }}
+      {% if form.name.errors %}<small style="color:var(--danger);">{{ form.name.errors.0 }}</small>{% endif %}
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      {{ form.description }}
+    </div>
+
+    <!-- Syllabus Tab Switcher -->
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:0.6rem;">Syllabus Input *</label>
+
+      <div class="tab-switcher">
+        <button type="button" class="tab-btn active" data-tab="text-pane">📝 Paste Text</button>
+        <button type="button" class="tab-btn" data-tab="pdf-pane">📄 Upload PDF</button>
+      </div>
+
+      <div id="text-pane" class="tab-pane">
+        {{ form.syllabus_text }}
+        <small style="color:var(--text-muted);font-size:0.78rem;">Paste your complete syllabus. AI will extract key topics automatically.</small>
+      </div>
+
+      <div id="pdf-pane" class="tab-pane" style="display:none;">
+        <div class="file-drop-zone">
+          <div class="file-drop-icon">📄</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag & drop your syllabus PDF here<br>
+            <span class="file-name" style="color:var(--primary);font-size:0.8rem;"></span>
+          </div>
+          {{ form.syllabus_pdf }}
+        </div>
+        <small style="color:var(--text-muted);font-size:0.78rem;">Text will be extracted automatically from your PDF.</small>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
+      <button type="submit" class="btn btn-primary btn-lg">🚀 Create Subject</button>
+      <a href="{% url 'subjects:list' %}" class="btn btn-secondary btn-lg">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

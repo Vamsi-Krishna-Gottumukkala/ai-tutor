@@ -1,0 +1,54 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Student Performance{% endblock %}
+{% block page_title %}📈 Student Performance{% endblock %}
+{% block content %}
+
+<div class="card" style="margin-bottom:1rem;">
+  <form method="get" style="display:flex;gap:1rem;align-items:center;">
+    <label style="font-weight:600;font-size:0.875rem;">Filter by Level:</label>
+    <select name="level" class="form-input" style="width:auto;padding:0.4rem 0.75rem;">
+      <option value="">All Levels</option>
+      <option value="beginner" {% if level_filter == 'beginner' %}selected{% endif %}>Beginner</option>
+      <option value="intermediate" {% if level_filter == 'intermediate' %}selected{% endif %}>Intermediate</option>
+      <option value="advanced" {% if level_filter == 'advanced' %}selected{% endif %}>Advanced</option>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    {% if level_filter %}<a href="{% url 'admin_panel:performance' %}" class="btn btn-secondary btn-sm">Clear</a>{% endif %}
+  </form>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Quiz Attempts ({{ attempts.count }})</h2>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Student</th><th>Subject</th><th>Type</th><th>Score</th><th>%</th><th>Level</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        {% for attempt in attempts %}
+        <tr>
+          <td>{{ attempt.user.email }}</td>
+          <td>{{ attempt.quiz.subject.name }}</td>
+          <td><span class="badge badge-secondary">{{ attempt.quiz.get_quiz_type_display }}</span></td>
+          <td>{{ attempt.score }}/{{ attempt.total_questions }}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <div class="progress-bar-wrap" style="width:60px;">
+                <div class="progress-bar-fill" data-pct="{{ attempt.percentage }}" style="width:0%"></div>
+              </div>
+              {{ attempt.percentage }}%
+            </div>
+          </td>
+          <td><span class="badge {% if attempt.skill_level == 'advanced' %}badge-success{% elif attempt.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">{{ attempt.skill_level|capfirst }}</span></td>
+          <td style="font-size:0.8rem;color:var(--text-secondary);">{{ attempt.attempt_date|date:"M d" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" style="text-align:center;color:var(--text-muted);">No attempts found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

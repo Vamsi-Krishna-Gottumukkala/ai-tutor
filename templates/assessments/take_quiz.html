@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}{{ quiz.subject.name }} Quiz — AI Personal Tutor{% endblock %}
+
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">🧠 {{ quiz.get_quiz_type_display }}: {{ quiz.subject.name }}</h1>
+  <p class="page-subtitle">Answer all questions carefully. You can review before submitting.</p>
+</div>
+
+<form method="post" action="{% url 'assessments:submit_quiz' quiz.pk %}" id="quiz-form">
+  {% csrf_token %}
+
+  {% for question in questions %}
+  <div class="quiz-question-card fade-in" style="animation-delay: {{ forloop.counter0 }}00ms;">
+    <div class="question-number">Question {{ forloop.counter }} of {{ questions|length }} • {{ question.topic_tag }}</div>
+    <div class="question-text">{{ question.question_text }}</div>
+    <div class="options-grid">
+      {% for key, value in question.get_options.items %}
+      <label class="option-label" data-name="q_{{ question.pk }}">
+        <input type="radio" name="q_{{ question.pk }}" value="{{ key }}">
+        <span class="option-key">{{ key }}</span>
+        <span>{{ value }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="card fade-in" style="display:flex;align-items:center;justify-content:space-between;margin-top:1rem;">
+    <div style="font-size:0.875rem;color:var(--text-secondary);">
+      {{ questions|length }} questions total
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+      ✅ Submit Quiz
+    </button>
+  </div>
+</form>
+
+<script>
+document.getElementById('quiz-form').addEventListener('submit', function(e) {
+  const btn = document.getElementById('submit-btn');
+  btn.innerHTML = '<div class="spinner"></div> Grading...';
+  btn.disabled = true;
+});
+
+// Parse markdown for all question texts
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.marked) {
+    document.querySelectorAll('.question-text').forEach(el => {
+      // Decode HTML entities if any, then parse
+      const text = el.textContent;
+      el.innerHTML = marked.parse(text);
+    });
+  }
+});
+</script>
+{% endblock %}

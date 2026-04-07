@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Flashcards — {{ subject.name }}{% endblock %}
+{% block extra_js %}
+<script src="{% load static %}{% static 'js/flashcard.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header fade-in">
+  <a href="{% url 'subjects:detail' subject.pk %}" style="font-size:0.85rem;color:var(--text-secondary);">← {{ subject.name }}</a>
+  <h1 class="page-title">🃏 Flashcards</h1>
+  <p class="page-subtitle">Click each card to reveal the explanation</p>
+</div>
+
+{% if flashcards %}
+<div class="card fade-in" style="max-width:600px;margin:0 auto;text-align:center;">
+  <div style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:1rem;">
+    <span id="card-counter">1 / {{ flashcards|length }}</span> • Click card to flip
+  </div>
+
+  {% for card in flashcards %}
+  <div class="flashcard-scene" style="display:none;">
+    <div class="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <div class="flashcard-label">{{ card.topic }}</div>
+        <div class="flashcard-text">{{ card.front_text }}</div>
+        <div style="margin-top:1rem;font-size:0.75rem;opacity:0.6;">Click to reveal ↓</div>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <div class="flashcard-label" style="color:var(--primary);">Explanation</div>
+        <div class="flashcard-text">{{ card.back_text }}</div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- End Scene -->
+  <div class="flashcard-end-scene fade-in" style="display:none; padding: 3rem; text-align: center;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+    <h2 style="margin-bottom: 0.5rem; color:var(--text-primary);">Awesome job!</h2>
+    <p style="color:var(--text-secondary); margin-bottom: 2rem;">You've reviewed all your flashcards for now.</p>
+    <div style="display:flex; flex-direction:column; gap: 0.75rem; align-items:center;">
+        <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-primary" style="width: 200px;">Take Daily Quiz</a>
+        <button id="restart-cards" class="btn btn-secondary" style="width: 200px;">Review Again</button>
+        <a href="{% url 'learning:learning_path' subject.pk %}" class="btn btn-outline" style="width: 200px;">Back to Path</a>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1rem;">
+    <button class="btn btn-secondary" id="prev-card">← Previous</button>
+    <button class="btn btn-primary" id="next-card">Next →</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.marked) {
+    document.querySelectorAll('.flashcard-text').forEach(el => {
+      // Decode initially and parse
+      const text = el.textContent;
+      el.innerHTML = marked.parse(text);
+    });
+  }
+});
+</script>
+{% else %}
+<div class="card fade-in">
+  <div class="empty-state">
+    <div class="empty-state-icon">🃏</div>
+    <div class="empty-state-title">No Flashcards Yet</div>
+    <div class="empty-state-text">Complete your basic test to generate flashcards</div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

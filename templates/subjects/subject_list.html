@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}My Subjects — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in" style="display:flex;align-items:center;justify-content:space-between;">
+  <div>
+    <h1 class="page-title">📚 My Subjects</h1>
+    <p class="page-subtitle">Manage your subjects and syllabi</p>
+  </div>
+  <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Subject</a>
+</div>
+
+{% if subjects %}
+<div class="grid-3 fade-in">
+  {% for subject in subjects %}
+  <div class="card card-interactive">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.75rem;">
+      <div class="stat-icon violet" style="width:44px;height:44px;">📖</div>
+      <span class="badge {% if subject.has_basic_test_completed %}badge-success{% else %}badge-warning{% endif %}">
+        {% if subject.has_basic_test_completed %}Tested{% else %}Pending{% endif %}
+      </span>
+    </div>
+    <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.25rem;color:var(--text-primary);">{{ subject.name }}</h3>
+    {% if subject.description %}
+    <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.75rem;">{{ subject.description|truncatewords:12 }}</p>
+    {% endif %}
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:1rem;">
+      {{ subject.topics.count }} topics • Added {{ subject.created_at|date:"M d, Y" }}
+    </div>
+    <div style="display:flex;gap:0.5rem;">
+      <a href="{% url 'subjects:detail' subject.pk %}" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;">View</a>
+      {% if subject.has_basic_test_completed %}
+      <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-secondary btn-sm">Retake</a>
+      {% else %}
+      <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-outline btn-sm">Test</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card fade-in">
+  <div class="empty-state">
+    <div class="empty-state-icon">📚</div>
+    <div class="empty-state-title">No Subjects Yet</div>
+    <div class="empty-state-text">Add your first subject by entering a syllabus or uploading a PDF</div>
+    <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Your First Subject</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

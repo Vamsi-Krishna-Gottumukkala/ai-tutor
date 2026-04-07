@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AI Personal Tutor{% endblock %}</title>
+  <meta name="description" content="{% block meta_desc %}Intelligent AI-powered personal tutor for adaptive learning and assessment{% endblock %}">
+  {% load static %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+{% if messages %}
+<div class="message-container">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags|default:'info' }}" data-auto-dismiss>
+    {% if message.tags == 'success' %}✅{% elif message.tags == 'error' or message.tags == 'danger' %}❌{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if user.is_authenticated and not user.is_staff %}
+<div class="app-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">
+        <div class="brand-icon">🎓</div>
+        AI Tutor
+      </div>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar">
+        {% if user.avatar %}
+          <img src="{{ user.avatar.url }}" alt="{{ user.display_name }}">
+        {% else %}
+          {{ user.display_name|first|upper }}
+        {% endif %}
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ user.display_name }}</div>
+        <div class="user-level">{{ user.skill_level|capfirst }}</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="{% url 'dashboard:home' %}" class="nav-item {% if request.resolver_match.namespace == 'dashboard' %}active{% endif %}">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="{% url 'subjects:list' %}" class="nav-item {% if request.resolver_match.namespace == 'subjects' %}active{% endif %}">
+        <span class="nav-icon">📚</span> My Subjects
+      </a>
+      <a href="{% url 'assessments:history' %}" class="nav-item {% if request.resolver_match.namespace == 'assessments' %}active{% endif %}">
+        <span class="nav-icon">🧠</span> Quizzes
+      </a>
+      <a href="{% url 'chatbot:chat' %}" class="nav-item {% if request.resolver_match.namespace == 'chatbot' %}active{% endif %}">
+        <span class="nav-icon">💬</span> AI Tutor Chat
+      </a>
+
+      <div class="nav-section-label" style="margin-top: 0.5rem;">Account</div>
+      <a href="{% url 'accounts:profile' %}" class="nav-item">
+        <span class="nav-icon">👤</span> Profile
+      </a>
+      <a href="{% url 'accounts:logout' %}" class="nav-item">
+        <span class="nav-icon">🚪</span> Logout
+      </a>
+    </nav>
+
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<!-- Chatbot FAB -->
+<button class="chatbot-fab" id="chatbot-fab" title="Ask AI Tutor">💬</button>
+<input type="hidden" id="chatbot-subject-id" value="{{ current_subject_id|default:'' }}">
+
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-header">
+    <span class="chatbot-header-title">🤖 AI Tutor Assistant</span>
+    <button id="chatbot-close" style="background:none;border:none;color:white;cursor:pointer;font-size:1.1rem;">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages">
+    <div class="chat-msg assistant">
+      👋 Hi! I'm your AI tutor. Ask me anything about your subjects or topics you're learning!
+    </div>
+  </div>
+  <div class="chatbot-input-row">
+    <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask a question..." autocomplete="off">
+    <button class="btn btn-primary btn-sm" id="chatbot-send">Send</button>
+  </div>
+</div>
+
+{% else %}
+  {% block auth_content %}{% endblock %}
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/chatbot.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

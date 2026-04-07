@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}My Profile — AI Personal Tutor{% endblock %}
+{% block content %}
+<div class="page-header fade-in">
+  <h1 class="page-title">👤 My Profile</h1>
+</div>
+<div class="card fade-in" style="max-width:500px;">
+  <div style="display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);">
+    <div class="user-avatar" style="width:64px;height:64px;font-size:1.5rem;">
+      {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" alt="{{ user.display_name }}">
+      {% else %}
+        {{ user.display_name|first|upper }}
+      {% endif %}
+    </div>
+    <div>
+      <div style="font-size:1.1rem;font-weight:700;">{{ user.display_name }}</div>
+      <div style="color:var(--text-secondary);font-size:0.875rem;">{{ user.email }}</div>
+      <span class="skill-badge {{ user.skill_level }} badge" style="margin-top:0.3rem;">{{ user.skill_level|capfirst }}</span>
+    </div>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      <label class="form-label">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}<small style="color:var(--danger);">{{ field.errors.0 }}</small>{% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-full">💾 Save Changes</button>
+  </form>
+
+  <div style="margin-top:1rem;text-align:center;">
+    <a href="{% url 'accounts:logout' %}" class="btn btn-secondary btn-sm">🚪 Logout</a>
+  </div>
+</div>
+{% endblock %}
