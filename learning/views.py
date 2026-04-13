@@ -6,7 +6,6 @@ from subjects.models import Subject
 from assessments.models import WeakTopic
 from .models import LearningPath, Flashcard, DailyQuiz
 from .generator import generate_learning_path, generate_flashcards
-from assessments.quiz_generator import generate_quiz
 
 
 @login_required
@@ -69,19 +68,17 @@ def daily_quiz_home(request, subject_id):
         user=request.user,
         subject=subject,
         scheduled_date=today,
-        defaults={'is_locked': False}
+        defaults={'is_locked': True}
     )
 
-    if created or daily.quiz is None:
-        weak_topics = list(WeakTopic.objects.filter(
-            user=request.user, subject=subject
-        ).values_list('topic_name', flat=True)[:5])
-        difficulty = 'focused on weak areas' if weak_topics else 'mixed'
-        quiz = generate_quiz(subject, request.user, quiz_type='daily', num_questions=5, difficulty=difficulty)
-        if quiz:
-            daily.quiz = quiz
-            daily.is_locked = False
-            daily.save()
+    # Daily quiz is pre-generated after main quiz submission.
+    # If not ready yet, show a friendly waiting state instead
+    # of making a blocking Gemini call.
+    if daily.quiz is None:
+        return render(request, 'learning/daily_quiz.html', {
+            'subject': subject,
+            'not_ready': True,
+        })
 
     if daily.is_completed:
         attempt = daily.quiz.attempts.filter(user=request.user).first() if daily.quiz else None
