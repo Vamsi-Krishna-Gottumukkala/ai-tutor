@@ -5,7 +5,7 @@ from django.contrib import messages
 from subjects.models import Subject
 from assessments.models import WeakTopic
 from .models import LearningPath, Flashcard, DailyQuiz
-from .generator import generate_learning_content
+from .generator import generate_learning_path, generate_flashcards
 from assessments.quiz_generator import generate_quiz
 
 
@@ -22,7 +22,7 @@ def learning_path(request, subject_id):
 
     # Regenerate if requested
     if request.method == 'POST' or path is None:
-        generate_learning_content(request.user, subject)
+        generate_learning_path(request.user, subject)
         path = LearningPath.objects.filter(user=request.user, subject=subject).first()
         messages.success(request, 'Learning path updated!')
 
@@ -44,7 +44,7 @@ def flashcards(request, subject_id):
     cards = Flashcard.objects.filter(user=request.user, subject=subject)
 
     if not cards.exists():
-        generate_learning_content(request.user, subject)
+        generate_flashcards(request.user, subject)
         cards = Flashcard.objects.filter(user=request.user, subject=subject)
 
     return render(request, 'learning/flashcards.html', {

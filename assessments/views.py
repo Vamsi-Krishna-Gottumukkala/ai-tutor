@@ -103,8 +103,11 @@ def submit_quiz(request, quiz_id):
 
     # Trigger adaptive content generation
     try:
-        from learning.generator import generate_learning_content
-        generate_learning_content(request.user, quiz.subject)
+        from learning.models import Flashcard
+        Flashcard.objects.filter(user=request.user, subject=quiz.subject).delete()
+        
+        from learning.generator import generate_learning_path
+        generate_learning_path(request.user, quiz.subject)
     except Exception as e:
         print(f"Learning content generation error: {e}")
 

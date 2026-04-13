@@ -54,9 +54,9 @@ Make the flashcards educational, clear, and suitable for revision. Return ONLY v
 """
 
 
-def generate_learning_content(user, subject):
+def generate_learning_path(user, subject):
     """
-    Generate personalized learning content after a quiz attempt.
+    Generate personalized learning path after a quiz attempt.
     Called automatically after quiz submission.
     """
     from assessments.models import QuizAttempt, WeakTopic
@@ -99,7 +99,21 @@ def generate_learning_content(user, subject):
     except Exception as e:
         print(f"Learning path generation error: {e}")
 
-    # 2. Generate flashcards (Dynamic: update based on current weak topics)
+
+def generate_flashcards(user, subject):
+    """
+    Generate dynamic flashcards based on the user's weak topics.
+    Called Just-In-Time when the user visits the flashcards page.
+    """
+    from assessments.models import WeakTopic
+    from .models import Flashcard
+
+    weak_topics = list(
+        WeakTopic.objects.filter(user=user, subject=subject)
+        .values_list('topic_name', flat=True)[:5]
+    )
+
+    # Generate flashcards (Dynamic: update based on current weak topics)
     try:
         topics_to_flash = weak_topics if weak_topics else subject.topic_list
         flash_prompt = FLASHCARD_PROMPT.format(
