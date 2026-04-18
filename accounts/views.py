@@ -13,7 +13,7 @@ def register_view(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             messages.success(request, f'Welcome, {user.display_name}! Your account has been created.')
             return redirect('dashboard:home')
         else:
@@ -36,7 +36,7 @@ def login_view(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=email, password=password)
             if user is not None:
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 if user.is_staff:
                     return redirect('admin_panel:dashboard')
                 return redirect('dashboard:home')
