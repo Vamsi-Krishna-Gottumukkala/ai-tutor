@@ -1,0 +1,294 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelligent AI Personal Tutor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(
+          160deg,
+          #dce8f5 0%,
+          #eaf1fb 50%,
+          #d6e8f7 100%
+        );
+        position: relative;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1.5rem 3rem;
+        color: #1a1a2e;
+      }
+
+      /* ── Network background SVG ── */
+      .network-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.25;
+        pointer-events: none;
+      }
+
+      /* ── College header ── */
+      .college-header {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 900px;
+        padding: 1.5rem 0 0.75rem;
+        border-bottom: 1px solid rgba(30, 42, 94, 0.15);
+      }
+      .logo {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+      .header-text {
+        text-align: center;
+      }
+      .header-text h1 {
+        font-size: 1.55rem;
+        font-weight: 800;
+        font-family: Georgia, serif;
+        color: #1a1a2e;
+        line-height: 1.3;
+        letter-spacing: 0.02em;
+      }
+      .header-text .affiliation {
+        color: #c0392b;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 0.35rem;
+        font-style: italic;
+      }
+      .header-text .location {
+        font-size: 0.88rem;
+        color: #333;
+        margin-top: 0.2rem;
+        font-weight: 600;
+      }
+
+      /* ── Project title ── */
+      .project-title {
+        position: relative;
+        z-index: 1;
+        font-size: 3rem;
+        font-weight: 900;
+        font-family: Georgia, serif;
+        text-align: center;
+        color: #1a1a2e;
+        line-height: 1.2;
+        margin: 2.5rem 0 3rem;
+        max-width: 860px;
+      }
+
+      /* ── Details row ── */
+      .details-row {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 860px;
+        gap: 2rem;
+        margin-bottom: 3.5rem;
+      }
+      .guide-block {
+        font-size: 0.97rem;
+        line-height: 1.8;
+        color: #1a1a2e;
+      }
+      .guide-block .label {
+        font-weight: 800;
+        font-size: 1rem;
+      }
+
+      .team-block {
+        font-size: 0.97rem;
+        line-height: 1.8;
+        color: #1a1a2e;
+        text-align: right;
+      }
+      .team-block .label {
+        font-weight: 800;
+      }
+      .member-row {
+        display: flex;
+        justify-content: flex-end;
+        gap: 2.5rem;
+      }
+
+      /* ── Proceed button ── */
+      .proceed-btn {
+        position: relative;
+        z-index: 1;
+        background: #1e2a5e;
+        color: #fff;
+        border: none;
+        padding: 0.9rem 3rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        letter-spacing: 0.03em;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        box-shadow: 0 4px 18px rgba(30, 42, 94, 0.28);
+      }
+      .proceed-btn:hover {
+        background: #16215a;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Network / node-link background -->
+    <svg
+      class="network-bg"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 800"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2a4a9e" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#1e2a5e" stop-opacity="0.4" />
+        </radialGradient>
+      </defs>
+      <!-- Lines -->
+      <g stroke="#3a6ad4" stroke-width="1" stroke-opacity="0.5">
+        <line x1="60" y1="120" x2="220" y2="200" />
+        <line x1="220" y1="200" x2="400" y2="140" />
+        <line x1="400" y1="140" x2="580" y2="260" />
+        <line x1="580" y1="260" x2="740" y2="180" />
+        <line x1="740" y1="180" x2="920" y2="300" />
+        <line x1="920" y1="300" x2="1100" y2="220" />
+        <line x1="60" y1="120" x2="130" y2="350" />
+        <line x1="130" y1="350" x2="300" y2="430" />
+        <line x1="300" y1="430" x2="220" y2="200" />
+        <line x1="300" y1="430" x2="500" y2="500" />
+        <line x1="500" y1="500" x2="580" y2="260" />
+        <line x1="500" y1="500" x2="700" y2="580" />
+        <line x1="700" y1="580" x2="920" y2="300" />
+        <line x1="700" y1="580" x2="860" y2="680" />
+        <line x1="860" y1="680" x2="1060" y2="600" />
+        <line x1="1060" y1="600" x2="1100" y2="220" />
+        <line x1="1100" y1="220" x2="1150" y2="450" />
+        <line x1="1150" y1="450" x2="1060" y2="600" />
+        <line x1="130" y1="350" x2="60" y2="560" />
+        <line x1="60" y1="560" x2="200" y2="680" />
+        <line x1="200" y1="680" x2="300" y2="430" />
+        <line x1="200" y1="680" x2="400" y2="750" />
+        <line x1="400" y1="750" x2="500" y2="500" />
+        <line x1="400" y1="140" x2="300" y2="40" />
+        <line x1="740" y1="180" x2="640" y2="60" />
+        <line x1="640" y1="60" x2="820" y2="80" />
+        <line x1="820" y1="80" x2="1100" y2="220" />
+      </g>
+      <!-- Nodes -->
+      <g fill="url(#nodeGrad)">
+        <circle cx="60" cy="120" r="7" />
+        <circle cx="220" cy="200" r="9" />
+        <circle cx="400" cy="140" r="7" />
+        <circle cx="580" cy="260" r="9" />
+        <circle cx="740" cy="180" r="7" />
+        <circle cx="920" cy="300" r="9" />
+        <circle cx="1100" cy="220" r="7" />
+        <circle cx="130" cy="350" r="6" />
+        <circle cx="300" cy="430" r="8" />
+        <circle cx="500" cy="500" r="9" />
+        <circle cx="700" cy="580" r="7" />
+        <circle cx="860" cy="680" r="8" />
+        <circle cx="1060" cy="600" r="7" />
+        <circle cx="1150" cy="450" r="6" />
+        <circle cx="60" cy="560" r="7" />
+        <circle cx="200" cy="680" r="8" />
+        <circle cx="400" cy="750" r="6" />
+        <circle cx="300" cy="40" r="5" />
+        <circle cx="640" cy="60" r="6" />
+        <circle cx="820" cy="80" r="5" />
+      </g>
+    </svg>
+
+    <!-- College header with logos -->
+    <div class="college-header">
+      <img
+        src="{% static 'images/gvplogo.png' %}"
+        alt="GVP Logo"
+        class="logo"
+      />
+      <div class="header-text">
+        <h1>
+          GAYATRI VIDYA PARISHAD<br />COLLEGE FOR DEGREE AND PG COURSES (A)
+        </h1>
+        <p class="affiliation">
+          (Affiliated to Andhra University | Reaccredited by NAAC | ISO 9001:
+          2015)
+        </p>
+        <p class="location">Visakhapatnam-530045</p>
+        <p class="location">Department of Computer Applications(UG)</p>
+      </div>
+      <img
+        src="{% static 'images/bsclogo.jpeg' %}"
+        alt="BSC Logo"
+        class="logo"
+      />
+    </div>
+
+    <h2 class="project-title">
+      Intelligent AI Personal Tutor for Adaptive Learning and Assessment
+    </h2>
+
+    <div class="details-row">
+      <div class="guide-block">
+        <div class="label">Project Guide:</div>
+        <br />
+        P.Anantha Lakshmi<br />
+        Assistant Professor<br />
+        Department of Computer Applications
+      </div>
+      <div class="team-block">
+        <div class="label">Team-11 BCA VI-Sem</div>
+        <div class="label">Project Members</div>
+        <div class="member-row">
+          <span>1. M.Vosmika</span><span>2023-2402015</span>
+        </div>
+        <div class="member-row">
+          <span>2. S.Chandini</span><span>2023-2402056</span>
+        </div>
+        <div class="member-row">
+          <span>3. B.Bhavitesh</span><span>2023-2402046</span>
+        </div>
+        <div class="member-row">
+          <span>4. S.Jeevan Sai</span><span>2023-2402007</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="/info/" class="proceed-btn">Proceed →</a>
+  </body>
+</html>

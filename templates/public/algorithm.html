@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm — AI Personal Tutor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(160deg, #dce8f5 0%, #eaf1fb 50%, #d6e8f7 100%);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Left sidebar */
+    .sidebar {
+      width: 120px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1rem 1.5rem;
+    }
+    .side-btn {
+      background: #1e2a5e;
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(30,42,94,0.20);
+    }
+    .side-btn:hover { background: #16215a; }
+
+    /* Main card */
+    .card {
+      flex: 1;
+      background: #fff;
+      margin: 1.5rem 1.5rem 1.5rem 0;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px rgba(30,42,94,0.10);
+      padding: 3rem 3.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #1e2a5e;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.05em;
+    }
+    .algo-list {
+      list-style: none;
+      flex: 1;
+    }
+    .algo-list li {
+      font-size: 1.05rem;
+      color: #1a1a2e;
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .algo-list li::before {
+      content: '●';
+      position: absolute;
+      left: 0;
+      color: #1e2a5e;
+      font-size: 0.6rem;
+      top: 0.45rem;
+    }
+
+    /* Footer row */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eee;
+      padding-top: 1.2rem;
+      margin-top: 1rem;
+    }
+    .footer-label {
+      font-style: italic;
+      font-size: 0.82rem;
+      color: #888;
+    }
+    .example-btn {
+      background: #1e2a5e;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(30,42,94,0.20);
+    }
+    .example-btn:hover {
+      background: #16215a;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="/info/" class="side-btn">← Back</a>
+  </div>
+
+  <div class="card">
+    <h1>ALGORITHM</h1>
+    <ul class="algo-list">
+      <li>Used for student performance analysis.</li>
+      <li>Takes inputs like quiz scores, accuracy, time taken, and attempts.</li>
+      <li>Builds multiple decision trees for prediction.</li>
+      <li>Combines results to classify student performance level.</li>
+      <li>Identifies weak and strong learning areas.</li>
+      <li>Enables personalized feedback and study recommendations.</li>
+      <li>Supports adaptive and self-paced learning.</li>
+    </ul>
+    <div class="card-footer">
+      <span class="footer-label">Intelligent AI Personal Tutor for Adaptive Learning and Assessment</span>
+      <a href="/info/example/" class="example-btn">Example →</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example — AI Personal Tutor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(160deg, #dce8f5 0%, #eaf1fb 50%, #d6e8f7 100%);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 120px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1rem;
+    }
+    .side-btn {
+      background: #1e2a5e;
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(30,42,94,0.20);
+    }
+    .side-btn:hover { background: #16215a; }
+
+    .card {
+      flex: 1;
+      background: #fff;
+      margin: 1.5rem 1.5rem 1.5rem 0;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px rgba(30,42,94,0.10);
+      padding: 3rem 3.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #1e2a5e;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.05em;
+    }
+    .content { flex: 1; }
+    .field { margin-bottom: 1.2rem; font-size: 1rem; color: #1a1a2e; }
+    .field strong { font-weight: 700; }
+
+    .flow-list {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+    .flow-list li {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 1.1rem;
+      padding-left: 1.2rem;
+      position: relative;
+      color: #1a1a2e;
+    }
+    .flow-list li::before {
+      content: '●';
+      position: absolute;
+      left: 0;
+      color: #1e2a5e;
+      font-size: 0.6rem;
+      top: 0.45rem;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eee;
+      padding-top: 1.2rem;
+      margin-top: 1rem;
+    }
+    .footer-label {
+      font-style: italic;
+      font-size: 0.82rem;
+      color: #888;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eee;
+      padding-top: 1.2rem;
+      margin-top: 1rem;
+    }
+    .footer-label {
+      font-style: italic;
+      font-size: 0.82rem;
+      color: #888;
+    }
+    .example-btn {
+      background: #1e2a5e;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(30,42,94,0.20);
+    }
+    .example-btn:hover {
+      background: #16215a;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="/info/algorithm/" class="side-btn">← Back</a>
+  </div>
+
+  <div class="card">
+    <h1>EXAMPLE</h1>
+    <div class="content">
+      <div class="field"><strong>Student:</strong> Anjali</div>
+      <div class="field"><strong>Dashboard Modules:</strong><br>Progress | Subjects | AI Tutor | Quiz |</div>
+      <div class="field"><strong>System Flow:</strong></div>
+      <ul class="flow-list">
+        <li><strong>Login &amp; Dashboard:</strong> View progress and available modules.</li>
+        <li><strong>Subject Selection:</strong> Choose subject and access syllabus &amp; notes.</li>
+        <li><strong>AI Tutor:</strong> Ask questions and receive explanations.</li>
+        <li><strong>Quiz &amp; Exam Tutor:</strong> Attempt daily quiz, view flashcards and important questions.</li>
+        <li><strong>Progress Update:</strong> Dashboard shows scores and completion status.</li>
+        <li><strong>Feedback:</strong> View student's level like beginner, intermediate and advanced.</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <span class="footer-label">Intelligent AI Personal Tutor for Adaptive Learning and Assessment</span>
+      <a href="/info/algorithm/" class="example-btn">Algorithm →</a>
+    </div>
+  </div>
+</body>
+</html>
