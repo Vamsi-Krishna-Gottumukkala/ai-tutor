@@ -119,11 +119,36 @@ Log into `http://127.0.0.1:8000/admin` using the superuser account created in st
 
 You can package this application into a standalone desktop executable using PyInstaller.
 
-1. Ensure you have your build environment activated (e.g., `build_env`).
-2. Run PyInstaller with the provided specification file:
+### 1. Create and Activate the Build Environment
+
+It's highly recommended to use a dedicated virtual environment for building:
+
+**For Windows:**
+```bash
+python -m venv build_env
+.\build_env\Scripts\activate
+```
+
+**For macOS/Linux:**
+```bash
+python3 -m venv build_env
+source build_env/bin/activate
+```
+
+### 2. Install Build Dependencies
+
+With your `build_env` activated, install the required packages (which includes PyInstaller):
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run PyInstaller
+
+Run PyInstaller using the provided specification file to build the executable:
 
 ```bash
 pyinstaller tutor.spec
 ```
 
-3. Once the build completes, your standalone application will be available in the `dist` directory.
+Once the build completes, your standalone application will be available in the `dist` directory.
