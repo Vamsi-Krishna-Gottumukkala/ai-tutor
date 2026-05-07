@@ -13,6 +13,12 @@ from ml_engine.predictor import predict_level
 def start_basic_quiz(request, subject_id):
     subject = get_object_or_404(Subject, pk=subject_id, owner=request.user)
 
+    # Read difficulty from POST form submission; default to 'mixed'
+    VALID_DIFFICULTIES = {'beginner', 'intermediate', 'advanced', 'mixed'}
+    difficulty = request.POST.get('difficulty', 'mixed')
+    if difficulty not in VALID_DIFFICULTIES:
+        difficulty = 'mixed'
+
     # Check if basic quiz already exists and is not completed
     existing = Quiz.objects.filter(
         subject=subject, user=request.user, quiz_type='basic', is_completed=False
@@ -21,13 +27,14 @@ def start_basic_quiz(request, subject_id):
     if existing:
         return redirect('assessments:take_quiz', quiz_id=existing.pk)
 
-    # Generate new quiz
-    quiz = generate_quiz(subject, request.user, quiz_type='basic', num_questions=10)
+    # Generate new quiz with the chosen difficulty
+    quiz = generate_quiz(subject, request.user, quiz_type='basic', num_questions=10, difficulty=difficulty)
     if quiz is None:
         messages.error(request, 'Failed to generate quiz. Please check your Gemini API key and try again.')
         return redirect('subjects:detail', pk=subject_id)
 
     return redirect('assessments:take_quiz', quiz_id=quiz.pk)
+
 
 
 @login_required
