@@ -16,6 +16,11 @@ media/
 env/
 venv/
 ENV/
+build_env/
+
+# PyInstaller Build Files
+build/
+dist/
 
 # OS generated files
 .DS_Store

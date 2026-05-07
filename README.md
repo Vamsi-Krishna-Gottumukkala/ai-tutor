@@ -114,3 +114,16 @@ Log into `http://127.0.0.1:8000/admin` using the superuser account created in st
 
 - **Google Login fails/SocialApp matching query does not exist:** Ensure you have configured the `Social Application` correctly in the Django Admin panel for the `google` provider with your Client ID and Client Secret, and assigned the `example.com` or `localhost` site to it.
 - ** psycopg2 installation errors:** On Windows, you may need to install PostgreSQL and add the `pg_config` path. Using `psycopg2-binary` (which is already in `requirements.txt`) usually resolves this without extra compiler tools.
+
+## Building as a Standalone Executable
+
+You can package this application into a standalone desktop executable using PyInstaller.
+
+1. Ensure you have your build environment activated (e.g., `build_env`).
+2. Run PyInstaller with the provided specification file:
+
+```bash
+pyinstaller tutor.spec
+```
+
+3. Once the build completes, your standalone application will be available in the `dist` directory.
