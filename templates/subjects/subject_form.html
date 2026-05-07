@@ -2,7 +2,7 @@
 {% block title %}Add Subject — AI Personal Tutor{% endblock %}
 {% block content %}
 <div class="page-header fade-in">
-  <h1 class="page-title">📚 Add New Subject</h1>
+  <h1 class="page-title"><i data-lucide="book"></i> Add New Subject</h1>
   <p class="page-subtitle">Enter your subject details and syllabus to get started</p>
 </div>
 
@@ -24,8 +24,8 @@
       <label class="form-label" style="margin-bottom:0.6rem;">Syllabus Input *</label>
 
       <div class="tab-switcher">
-        <button type="button" class="tab-btn active" data-tab="text-pane">📝 Paste Text</button>
-        <button type="button" class="tab-btn" data-tab="pdf-pane">📄 Upload PDF</button>
+        <button type="button" class="tab-btn active" data-tab="text-pane"><i data-lucide="file-edit"></i> Paste Text</button>
+        <button type="button" class="tab-btn" data-tab="pdf-pane"><i data-lucide="file-text"></i> Upload PDF</button>
       </div>
 
       <div id="text-pane" class="tab-pane">
@@ -35,7 +35,7 @@
 
       <div id="pdf-pane" class="tab-pane" style="display:none;">
         <div class="file-drop-zone">
-          <div class="file-drop-icon">📄</div>
+          <div class="file-drop-icon"><i data-lucide="file-text"></i></div>
           <div class="file-drop-text">
             <strong>Click to browse</strong> or drag & drop your syllabus PDF here<br>
             <span class="file-name" style="color:var(--primary);font-size:0.8rem;"></span>
@@ -47,7 +47,7 @@
     </div>
 
     <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
-      <button type="submit" class="btn btn-primary btn-lg">🚀 Create Subject</button>
+      <button type="submit" class="btn btn-primary btn-lg"><i data-lucide="rocket"></i> Create Subject</button>
       <a href="{% url 'subjects:list' %}" class="btn btn-secondary btn-lg">Cancel</a>
     </div>
   </form>

@@ -2,7 +2,7 @@
 {% block title %}My Profile — AI Personal Tutor{% endblock %}
 {% block content %}
 <div class="page-header fade-in">
-  <h1 class="page-title">👤 My Profile</h1>
+  <h1 class="page-title"><i data-lucide="user"></i> My Profile</h1>
 </div>
 <div class="card fade-in" style="max-width:500px;">
   <div style="display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);">
@@ -29,11 +29,11 @@
       {% if field.errors %}<small style="color:var(--danger);">{{ field.errors.0 }}</small>{% endif %}
     </div>
     {% endfor %}
-    <button type="submit" class="btn btn-primary btn-full">💾 Save Changes</button>
+    <button type="submit" class="btn btn-primary btn-full"><i data-lucide="save"></i> Save Changes</button>
   </form>
 
   <div style="margin-top:1rem;text-align:center;">
-    <a href="{% url 'accounts:logout' %}" class="btn btn-secondary btn-sm">🚪 Logout</a>
+    <a href="{% url 'accounts:logout' %}" class="btn btn-secondary btn-sm"><i data-lucide="log-out"></i> Logout</a>
   </div>
 </div>
 {% endblock %}

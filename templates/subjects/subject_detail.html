@@ -7,14 +7,14 @@
     <h1 class="page-title" style="margin-top:0.25rem;">{{ subject.name }}</h1>
     {% if subject.description %}<p class="page-subtitle">{{ subject.description }}</p>{% endif %}
   </div>
-  <a href="{% url 'subjects:delete' subject.pk %}" class="btn btn-danger btn-sm">🗑 Delete</a>
+  <a href="{% url 'subjects:delete' subject.pk %}" class="btn btn-danger btn-sm"><i data-lucide="trash-2"></i> Delete</a>
 </div>
 
 <div class="grid-2 fade-in">
   <!-- Topics -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">🏷 Extracted Topics</h2>
+      <h2 class="card-title"><i data-lucide="tag"></i> Extracted Topics</h2>
       <span class="badge badge-secondary">{{ topics.count }} topics</span>
     </div>
     {% if topics %}
@@ -31,36 +31,36 @@
   <!-- Actions -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">🎯 Actions</h2>
+      <h2 class="card-title"><i data-lucide="target"></i> Actions</h2>
     </div>
 
     <!-- Basic Test -->
     <div style="padding:1rem;background:var(--primary-lighter);border-radius:var(--radius-sm);margin-bottom:1rem;">
-      <div style="font-weight:600;margin-bottom:0.4rem;">🧠 Basic Assessment Test</div>
+      <div style="font-weight:600;margin-bottom:0.4rem;"><i data-lucide="brain"></i> Basic Assessment Test</div>
       <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:0.75rem;">
         {% if has_basic_test %}
-          ✅ Completed! You can retake or view dashboard results.
+          <i data-lucide="check-circle"></i> Completed! You can retake or view dashboard results.
         {% else %}
           Take your basic test to unlock flashcards, daily quizzes, and recommendations.
         {% endif %}
       </div>
       <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary">
-        {% if has_basic_test %}🔁 Retake Test{% else %}▶ Start Basic Test{% endif %}
+        {% if has_basic_test %}<i data-lucide="repeat"></i> Retake Test{% else %}<i data-lucide="play"></i> Start Basic Test{% endif %}
       </a>
     </div>
 
     {% if has_basic_test %}
     <div style="display:flex;flex-direction:column;gap:0.6rem;">
-      <a href="{% url 'learning:learning_path' subject.pk %}" class="btn btn-secondary">📈 View Learning Path</a>
-      <a href="{% url 'learning:flashcards' subject.pk %}" class="btn btn-secondary">🃏 Flashcards</a>
-      <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-secondary">📅 Daily Quiz</a>
-      <a href="{% url 'chatbot:chat_subject' subject.pk %}" class="btn btn-secondary">💬 Ask AI Tutor</a>
+      <a href="{% url 'learning:learning_path' subject.pk %}" class="btn btn-secondary"><i data-lucide="trending-up"></i> View Learning Path</a>
+      <a href="{% url 'learning:flashcards' subject.pk %}" class="btn btn-secondary"><i data-lucide="layers"></i> Flashcards</a>
+      <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-secondary"><i data-lucide="calendar"></i> Daily Quiz</a>
+      <a href="{% url 'chatbot:chat_subject' subject.pk %}" class="btn btn-secondary"><i data-lucide="message-circle"></i> Ask AI Tutor</a>
     </div>
     {% else %}
     <div style="display:flex;flex-direction:column;gap:0.6rem;opacity:0.4;">
-      <button class="btn btn-secondary" disabled>📈 Learning Path (locked)</button>
-      <button class="btn btn-secondary" disabled>🃏 Flashcards (locked)</button>
-      <button class="btn btn-secondary" disabled>📅 Daily Quiz (locked)</button>
+      <button class="btn btn-secondary" disabled><i data-lucide="trending-up"></i> Learning Path (locked)</button>
+      <button class="btn btn-secondary" disabled><i data-lucide="layers"></i> Flashcards (locked)</button>
+      <button class="btn btn-secondary" disabled><i data-lucide="calendar"></i> Daily Quiz (locked)</button>
     </div>
     {% endif %}
   </div>
@@ -70,7 +70,7 @@
 {% if latest_attempt %}
 <div class="card fade-in" style="margin-top:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">📊 Latest Performance</h2>
+    <h2 class="card-title"><i data-lucide="bar-chart-2"></i> Latest Performance</h2>
     <span class="badge {% if latest_attempt.skill_level == 'advanced' %}badge-success{% elif latest_attempt.skill_level == 'intermediate' %}badge-primary{% else %}badge-warning{% endif %}">
       {{ latest_attempt.skill_level|capfirst }}
     </span>

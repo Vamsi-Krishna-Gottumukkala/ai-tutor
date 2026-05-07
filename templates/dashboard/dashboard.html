@@ -39,35 +39,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 {% block content %}
 <div class="page-header fade-in">
-  <h1 class="page-title">👋 Hello, {{ user.display_name }}!</h1>
+  <h1 class="page-title"><i data-lucide="hand"></i> Hello, {{ user.display_name }}!</h1>
   <p class="page-subtitle">Here's your learning overview for today</p>
 </div>
 
 <!-- Stats -->
 <div class="stat-grid fade-in fade-in-delay-1">
   <div class="stat-card">
-    <div class="stat-icon violet">📚</div>
+    <div class="stat-icon violet"><i data-lucide="book"></i></div>
     <div>
       <div class="stat-value">{{ subjects.count }}</div>
       <div class="stat-label">Subjects</div>
     </div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon cyan">🧠</div>
+    <div class="stat-icon cyan"><i data-lucide="brain"></i></div>
     <div>
       <div class="stat-value">{{ total_attempts }}</div>
       <div class="stat-label">Quiz Attempts</div>
     </div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon green">📈</div>
+    <div class="stat-icon green"><i data-lucide="trending-up"></i></div>
     <div>
       <div class="stat-value">{{ avg_score }}%</div>
       <div class="stat-label">Average Score</div>
     </div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon amber">🏅</div>
+    <div class="stat-icon amber"><i data-lucide="medal"></i></div>
     <div>
       <div class="stat-value" style="font-size:1.1rem;margin-top:4px;">
         <span class="skill-badge {{ user.skill_level }}">{{ user.skill_level|capfirst }}</span>
@@ -81,13 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- Score Chart -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">📊 Score Progress</h2>
+      <h2 class="card-title"><i data-lucide="bar-chart-2"></i> Score Progress</h2>
     </div>
     {% if score_data %}
     <canvas id="scoreChart" height="180"></canvas>
     {% else %}
     <div class="empty-state">
-      <div class="empty-state-icon">📊</div>
+      <div class="empty-state-icon"><i data-lucide="bar-chart-2"></i></div>
       <div class="empty-state-title">No quiz data yet</div>
       <div class="empty-state-text">Complete a basic test to see your progress</div>
     </div>
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- Weak Topics -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">⚠️ Areas to Improve</h2>
+      <h2 class="card-title"><i data-lucide="alert-triangle"></i> Areas to Improve</h2>
     </div>
     {% if weak_topics %}
       {% for topic in weak_topics %}
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {% endfor %}
     {% else %}
     <div class="empty-state">
-      <div class="empty-state-icon">✅</div>
+      <div class="empty-state-icon"><i data-lucide="check-circle"></i></div>
       <div class="empty-state-title">No weak areas yet</div>
       <div class="empty-state-text">Take a quiz to identify your weak topics</div>
     </div>
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Subjects -->
 <div class="card fade-in fade-in-delay-3" style="margin-top:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">📚 My Subjects</h2>
+    <h2 class="card-title"><i data-lucide="book"></i> My Subjects</h2>
     <a href="{% url 'subjects:create' %}" class="btn btn-primary btn-sm">+ Add Subject</a>
   </div>
 
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {% for subject in subjects %}
     <a href="{% url 'subjects:detail' subject.pk %}" class="card card-interactive" style="text-decoration:none;">
       <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
-        <div class="stat-icon violet" style="width:40px;height:40px;font-size:1rem;">📖</div>
+        <div class="stat-icon violet" style="width:40px;height:40px;font-size:1rem;"><i data-lucide="book-open"></i></div>
         <div>
           <div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">{{ subject.name }}</div>
           <div style="font-size:0.75rem;color:var(--text-secondary);">{{ subject.topics.count }} topics</div>
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   {% else %}
   <div class="empty-state">
-    <div class="empty-state-icon">📚</div>
+    <div class="empty-state-icon"><i data-lucide="book"></i></div>
     <div class="empty-state-title">No subjects yet</div>
     <div class="empty-state-text">Add your first subject to start learning</div>
     <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Your First Subject</a>
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 {% if recent_attempts %}
 <div class="card fade-in" style="margin-top:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">🕐 Recent Quiz Attempts</h2>
+    <h2 class="card-title"><i data-lucide="clock"></i> Recent Quiz Attempts</h2>
     <a href="{% url 'assessments:history' %}" class="btn btn-secondary btn-sm">View All</a>
   </div>
   <div class="table-wrapper">

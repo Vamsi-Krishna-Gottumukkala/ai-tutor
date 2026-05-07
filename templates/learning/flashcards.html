@@ -7,7 +7,7 @@
 {% block content %}
 <div class="page-header fade-in">
   <a href="{% url 'subjects:detail' subject.pk %}" style="font-size:0.85rem;color:var(--text-secondary);">← {{ subject.name }}</a>
-  <h1 class="page-title">🃏 Flashcards</h1>
+  <h1 class="page-title"><i data-lucide="layers"></i> Flashcards</h1>
   <p class="page-subtitle">Click each card to reveal the explanation</p>
 </div>
 
@@ -35,7 +35,7 @@
 
   <!-- End Scene -->
   <div class="flashcard-end-scene fade-in" style="display:none; padding: 3rem; text-align: center;">
-    <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+    <div style="font-size: 3rem; margin-bottom: 1rem;"><i data-lucide="party-popper"></i></div>
     <h2 style="margin-bottom: 0.5rem; color:var(--text-primary);">Awesome job!</h2>
     <p style="color:var(--text-secondary); margin-bottom: 2rem;">You've reviewed all your flashcards for now.</p>
     <div style="display:flex; flex-direction:column; gap: 0.75rem; align-items:center;">
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 {% else %}
 <div class="card fade-in">
   <div class="empty-state">
-    <div class="empty-state-icon">🃏</div>
+    <div class="empty-state-icon"><i data-lucide="layers"></i></div>
     <div class="empty-state-title">No Flashcards Yet</div>
     <div class="empty-state-text">Complete your basic test to generate flashcards</div>
   </div>

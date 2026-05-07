@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -25,7 +27,7 @@
   <aside class="admin-sidebar">
     <div class="admin-brand">
       <div class="admin-brand-name">
-        🎓 AI Tutor
+        <i data-lucide="graduation-cap"></i> AI Tutor
         <span class="admin-brand-badge">Admin</span>
       </div>
     </div>
@@ -33,30 +35,30 @@
     <nav class="admin-nav">
       <div class="admin-nav-label">Overview</div>
       <a href="{% url 'admin_panel:dashboard' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-        📊 Dashboard
+        <i data-lucide="bar-chart-2"></i> Dashboard
       </a>
 
       <div class="admin-nav-label" style="margin-top:0.5rem;">Manage</div>
       <a href="{% url 'admin_panel:users' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'users' %}active{% endif %}">
-        👥 Users
+        <i data-lucide="users"></i> Users
       </a>
       <a href="{% url 'admin_panel:subjects' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'subjects' %}active{% endif %}">
-        📚 Subjects
+        <i data-lucide="book"></i> Subjects
       </a>
       <a href="{% url 'admin_panel:quizzes' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'quizzes' %}active{% endif %}">
-        🧠 Quizzes
+        <i data-lucide="brain"></i> Quizzes
       </a>
 
       <div class="admin-nav-label" style="margin-top:0.5rem;">Analytics</div>
       <a href="{% url 'admin_panel:performance' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'performance' %}active{% endif %}">
-        📈 Performance
+        <i data-lucide="trending-up"></i> Performance
       </a>
       <a href="{% url 'admin_panel:moderation' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'moderation' %}active{% endif %}">
-        🚫 Moderation
+        <i data-lucide="ban"></i> Moderation
       </a>
 
       <div class="admin-nav-label" style="margin-top:0.5rem;">Account</div>
-      <a href="{% url 'accounts:logout' %}" class="admin-nav-item">🚪 Logout</a>
+      <a href="{% url 'accounts:logout' %}" class="admin-nav-item"><i data-lucide="log-out"></i> Logout</a>
     </nav>
   </aside>
 
@@ -71,5 +73,9 @@
 </div>
 
 <script src="{% static 'js/main.js' %}"></script>
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+</script>
 </body>
 </html>

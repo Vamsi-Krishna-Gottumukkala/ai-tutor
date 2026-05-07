@@ -59,6 +59,13 @@ a:hover { color: var(--primary-dark); }
 
 img { max-width: 100%; height: auto; }
 
+/* ── Icons ────────────────────────────────────────────────── */
+.lucide {
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: middle;
+}
+
 /* ── Layout ───────────────────────────────────────────────── */
 .app-wrapper {
   display: flex;
@@ -106,7 +113,7 @@ img { max-width: 100%; height: auto; }
 .sidebar-brand .brand-icon {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -127,7 +134,7 @@ img { max-width: 100%; height: auto; }
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+  background: var(--primary-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,7 +314,7 @@ img { max-width: 100%; height: auto; }
 .btn:active { transform: scale(0.98); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: var(--primary);
   color: white;
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
 }
@@ -479,7 +486,7 @@ tbody tr:hover { background: var(--primary-lighter); }
 .progress-bar-fill {
   height: 100%;
   border-radius: 100px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
+  background: var(--primary);
   transition: width 0.8s ease;
 }
 
@@ -489,7 +496,7 @@ tbody tr:hover { background: var(--primary-lighter); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-lighter) 0%, var(--accent-light) 100%);
+  background: var(--primary-lighter);
   padding: 2rem;
 }
 
@@ -511,7 +518,7 @@ tbody tr:hover { background: var(--primary-lighter); }
 .auth-logo-icon {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   border-radius: 16px;
   display: inline-flex;
   align-items: center;
@@ -599,7 +606,7 @@ tbody tr:hover { background: var(--primary-lighter); }
 }
 
 .flashcard-front {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: var(--primary);
   color: white;
 }
 
@@ -736,7 +743,7 @@ tbody tr:hover { background: var(--primary-lighter); }
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   color: white;
   display: flex;
   align-items: center;
@@ -779,7 +786,7 @@ tbody tr:hover { background: var(--primary-lighter); }
 }
 
 .chatbot-header {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   padding: 1rem 1.25rem;
   color: white;
   display: flex;

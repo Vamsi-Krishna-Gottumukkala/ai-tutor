@@ -27,7 +27,7 @@ class Command(BaseCommand):
         user.save()
 
         self.stdout.write(self.style.SUCCESS(
-            f'✅ Admin user created successfully!\n'
+            f'[SUCCESS] Admin user created successfully!\n'
             f'   Email: {email}\n'
             f'   Password: {password}\n'
             f'   Login at: /accounts/login/'

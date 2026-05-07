@@ -3,7 +3,7 @@
 {% block content %}
 <div class="page-header fade-in" style="display:flex;align-items:center;justify-content:space-between;">
   <div>
-    <h1 class="page-title">📚 My Subjects</h1>
+    <h1 class="page-title"><i data-lucide="book"></i> My Subjects</h1>
     <p class="page-subtitle">Manage your subjects and syllabi</p>
   </div>
   <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Subject</a>
@@ -14,7 +14,7 @@
   {% for subject in subjects %}
   <div class="card card-interactive">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.75rem;">
-      <div class="stat-icon violet" style="width:44px;height:44px;">📖</div>
+      <div class="stat-icon violet" style="width:44px;height:44px;"><i data-lucide="book-open"></i></div>
       <span class="badge {% if subject.has_basic_test_completed %}badge-success{% else %}badge-warning{% endif %}">
         {% if subject.has_basic_test_completed %}Tested{% else %}Pending{% endif %}
       </span>
@@ -40,7 +40,7 @@
 {% else %}
 <div class="card fade-in">
   <div class="empty-state">
-    <div class="empty-state-icon">📚</div>
+    <div class="empty-state-icon"><i data-lucide="book"></i></div>
     <div class="empty-state-title">No Subjects Yet</div>
     <div class="empty-state-text">Add your first subject by entering a syllabus or uploading a PDF</div>
     <a href="{% url 'subjects:create' %}" class="btn btn-primary">+ Add Your First Subject</a>

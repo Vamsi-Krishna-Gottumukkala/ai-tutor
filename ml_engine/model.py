@@ -87,12 +87,12 @@ def train_model(use_real_data: bool = True):
     clf = RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced')
     clf.fit(X_train, y_train)
     accuracy = clf.score(X_test, y_test)
-    print(f"✅ Random Forest trained — Test Accuracy: {accuracy:.2%}")
+    print(f"[SUCCESS] Random Forest trained — Test Accuracy: {accuracy:.2%}")
 
     # Ensure directory exists
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(clf, MODEL_PATH)
-    print(f"✅ Model saved to {MODEL_PATH}")
+    print(f"[SUCCESS] Model saved to {MODEL_PATH}")
     return clf
 
 

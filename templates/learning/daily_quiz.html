@@ -3,32 +3,32 @@
 {% block content %}
 <div class="page-header fade-in">
   <a href="{% url 'subjects:detail' subject.pk %}" style="font-size:0.85rem;color:var(--text-secondary);">← {{ subject.name }}</a>
-  <h1 class="page-title">📅 Daily Quiz</h1>
+  <h1 class="page-title"><i data-lucide="calendar"></i> Daily Quiz</h1>
 </div>
 
 <div class="card fade-in" style="max-width:600px;text-align:center;">
   {% if is_locked %}
   <div style="padding:2rem;">
-    <div style="font-size:3rem;margin-bottom:1rem;">🔒</div>
+    <div style="font-size:3rem;margin-bottom:1rem;"><i data-lucide="lock"></i></div>
     <h2 style="font-weight:700;margin-bottom:0.5rem;">Daily Quiz Locked</h2>
     <p style="color:var(--text-secondary);margin-bottom:1.25rem;">{{ lock_reason }}</p>
-    <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary">▶ Take Basic Test</a>
+    <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary"><i data-lucide="play"></i> Take Basic Test</a>
   </div>
 
   {% elif not_ready %}
   <div style="padding:2rem;">
-    <div style="font-size:3rem;margin-bottom:1rem;">⏳</div>
+    <div style="font-size:3rem;margin-bottom:1rem;"><i data-lucide="hourglass"></i></div>
     <h2 style="font-weight:700;margin-bottom:0.5rem;">Quiz Not Ready Yet</h2>
     <p style="color:var(--text-secondary);margin-bottom:1.25rem;">
       Your daily quiz is prepared right after you complete your main quiz.<br>
       Take the <strong>Basic Test</strong> or the <strong>latest quiz</strong> first — your daily will be waiting here instantly when you return!
     </p>
-    <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary">▶ Take Main Quiz</a>
+    <a href="{% url 'assessments:start_basic_quiz' subject.pk %}" class="btn btn-primary"><i data-lucide="play"></i> Take Main Quiz</a>
   </div>
 
   {% elif is_completed %}
   <div style="padding:2rem;">
-    <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+    <div style="font-size:3rem;margin-bottom:1rem;"><i data-lucide="check-circle"></i></div>
     <h2 style="font-weight:700;margin-bottom:0.5rem;">Today's Quiz Completed!</h2>
     {% if attempt %}
     <div style="margin:1rem 0;">
@@ -42,13 +42,13 @@
 
   {% else %}
   <div style="padding:2rem;">
-    <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
+    <div style="font-size:3rem;margin-bottom:1rem;"><i data-lucide="target"></i></div>
     <h2 style="font-weight:700;margin-bottom:0.5rem;">Today's Quiz is Ready!</h2>
     <p style="color:var(--text-secondary);margin-bottom:1.25rem;">
       5 questions focused on your weak areas — takes about 5 minutes.
     </p>
     {% if daily and daily.quiz %}
-    <a href="{% url 'assessments:take_quiz' daily.quiz.pk %}" class="btn btn-primary btn-lg">▶ Start Daily Quiz</a>
+    <a href="{% url 'assessments:take_quiz' daily.quiz.pk %}" class="btn btn-primary btn-lg"><i data-lucide="play"></i> Start Daily Quiz</a>
     {% endif %}
   </div>
   {% endif %}

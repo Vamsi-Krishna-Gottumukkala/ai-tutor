@@ -2,7 +2,7 @@
 {% block title %}Quiz History — AI Personal Tutor{% endblock %}
 {% block content %}
 <div class="page-header fade-in">
-  <h1 class="page-title">🧠 Quiz History</h1>
+  <h1 class="page-title"><i data-lucide="brain"></i> Quiz History</h1>
   <p class="page-subtitle">All your quiz attempts across subjects</p>
 </div>
 
@@ -32,7 +32,7 @@
 {% else %}
 <div class="card fade-in">
   <div class="empty-state">
-    <div class="empty-state-icon">🧠</div>
+    <div class="empty-state-icon"><i data-lucide="brain"></i></div>
     <div class="empty-state-title">No Quiz Attempts Yet</div>
     <div class="empty-state-text">Take your first quiz to see your history here</div>
     <a href="{% url 'subjects:list' %}" class="btn btn-primary">View My Subjects</a>

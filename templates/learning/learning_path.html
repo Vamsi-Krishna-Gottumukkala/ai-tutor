@@ -3,7 +3,7 @@
 {% block content %}
 <div class="page-header fade-in">
   <a href="{% url 'subjects:detail' subject.pk %}" style="font-size:0.85rem;color:var(--text-secondary);">← {{ subject.name }}</a>
-  <h1 class="page-title">📈 Your Learning Path</h1>
+  <h1 class="page-title"><i data-lucide="trending-up"></i> Your Learning Path</h1>
   <p class="page-subtitle">Personalised study plan based on your quiz performance</p>
 </div>
 
@@ -11,8 +11,8 @@
   <!-- Recommendations -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">💡 Study Recommendations</h2>
-      <form method="post" style="margin:0;">{% csrf_token %}<button class="btn btn-secondary btn-sm">🔄 Refresh</button></form>
+      <h2 class="card-title"><i data-lucide="lightbulb"></i> Study Recommendations</h2>
+      <form method="post" style="margin:0;">{% csrf_token %}<button class="btn btn-secondary btn-sm"><i data-lucide="refresh-cw"></i> Refresh</button></form>
     </div>
     {% if path and path.recommendations %}
       <ol style="padding-left:1.25rem;">
@@ -22,7 +22,7 @@
       </ol>
     {% else %}
       <div class="empty-state">
-        <div class="empty-state-icon">💡</div>
+        <div class="empty-state-icon"><i data-lucide="lightbulb"></i></div>
         <p>Generating your personalised recommendations...</p>
       </div>
     {% endif %}
@@ -31,7 +31,7 @@
   <!-- Weak Topics -->
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">⚠️ Focus Areas</h2>
+      <h2 class="card-title"><i data-lucide="alert-triangle"></i> Focus Areas</h2>
     </div>
     {% if weak_topics %}
       {% for topic in weak_topics %}
@@ -42,7 +42,7 @@
       {% endfor %}
     {% else %}
       <div class="empty-state">
-        <div class="empty-state-icon">🎯</div>
+        <div class="empty-state-icon"><i data-lucide="target"></i></div>
         <p>No weak topics identified yet. Keep practising!</p>
       </div>
     {% endif %}
@@ -53,7 +53,7 @@
 {% if path and path.important_questions %}
 <div class="card fade-in" style="margin-top:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">❓ Important Practice Questions</h2>
+    <h2 class="card-title"><i data-lucide="help-circle"></i> Important Practice Questions</h2>
   </div>
   <ol style="padding-left:1.25rem;">
     {% for q in path.important_questions %}
@@ -67,12 +67,12 @@
 {% if path and path.study_tips %}
 <div class="card fade-in" style="margin-top:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">📌 Study Tips</h2>
+    <h2 class="card-title"><i data-lucide="pin"></i> Study Tips</h2>
   </div>
   <div style="display:flex;flex-direction:column;gap:0.6rem;">
     {% for tip in path.study_tips %}
     <div style="display:flex;gap:0.75rem;padding:0.75rem;background:var(--primary-lighter);border-radius:var(--radius-sm);font-size:0.875rem;">
-      <span>✨</span>
+      <span><i data-lucide="sparkles"></i></span>
       <span class="markdown-content" style="align-self: center;">{{ tip }}</span>
     </div>
     {% endfor %}
@@ -81,8 +81,8 @@
 {% endif %}
 
 <div style="display:flex;gap:1rem;margin-top:1.5rem;">
-  <a href="{% url 'learning:flashcards' subject.pk %}" class="btn btn-primary">🃏 Study Flashcards</a>
-  <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-secondary">📅 Today's Quiz</a>
+  <a href="{% url 'learning:flashcards' subject.pk %}" class="btn btn-primary"><i data-lucide="layers"></i> Study Flashcards</a>
+  <a href="{% url 'learning:daily_quiz' subject.pk %}" class="btn btn-secondary"><i data-lucide="calendar"></i> Today's Quiz</a>
 </div>
 
 <script>

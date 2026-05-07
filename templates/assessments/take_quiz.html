@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="page-header fade-in">
-  <h1 class="page-title">🧠 {{ quiz.get_quiz_type_display }}: {{ quiz.subject.name }}</h1>
+  <h1 class="page-title"><i data-lucide="brain"></i> {{ quiz.get_quiz_type_display }}: {{ quiz.subject.name }}</h1>
   <p class="page-subtitle">Answer all questions carefully. You can review before submitting.</p>
 </div>
 
@@ -31,7 +31,7 @@
       {{ questions|length }} questions total
     </div>
     <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
-      ✅ Submit Quiz
+      <i data-lucide="check-circle"></i> Submit Quiz
     </button>
   </div>
 </form>

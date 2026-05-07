@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="page-header fade-in">
-  <h1 class="page-title">📊 Quiz Results</h1>
+  <h1 class="page-title"><i data-lucide="bar-chart-2"></i> Quiz Results</h1>
   <p class="page-subtitle">{{ attempt.quiz.subject.name }} • {{ attempt.attempt_date|date:"F d, Y" }}</p>
 </div>
 
@@ -38,13 +38,13 @@
 
   <div style="margin:0.75rem auto;">
     <span class="skill-badge {{ attempt.skill_level }} badge" style="font-size:0.95rem;padding:0.4rem 1.25rem;">
-      🏅 {{ attempt.skill_level|capfirst }} Level
+      <i data-lucide="medal"></i> {{ attempt.skill_level|capfirst }} Level
     </span>
   </div>
 
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:1rem;">
     <a href="{% url 'subjects:detail' attempt.quiz.subject.pk %}" class="btn btn-secondary">← Back to Subject</a>
-    <a href="{% url 'learning:learning_path' attempt.quiz.subject.pk %}" class="btn btn-primary">📈 View Learning Path</a>
+    <a href="{% url 'learning:learning_path' attempt.quiz.subject.pk %}" class="btn btn-primary"><i data-lucide="trending-up"></i> View Learning Path</a>
   </div>
 </div>
 
@@ -52,7 +52,7 @@
 {% if weak_topics %}
 <div class="card fade-in" style="margin-bottom:1.25rem;">
   <div class="card-header">
-    <h2 class="card-title">⚠️ Topics to Focus On</h2>
+    <h2 class="card-title"><i data-lucide="alert-triangle"></i> Topics to Focus On</h2>
   </div>
   <div>
     {% for topic in weak_topics %}
@@ -65,7 +65,7 @@
 <!-- Question Review -->
 <div class="card fade-in">
   <div class="card-header">
-    <h2 class="card-title">📝 Question Review</h2>
+    <h2 class="card-title"><i data-lucide="file-edit"></i> Question Review</h2>
   </div>
 
   {% for result in question_results %}
@@ -73,9 +73,9 @@
     <div class="question-number">
       Q{{ forloop.counter }}
       {% if result.is_correct %}
-        <span class="badge badge-success">✅ Correct</span>
+        <span class="badge badge-success"><i data-lucide="check-circle"></i> Correct</span>
       {% else %}
-        <span class="badge badge-danger">❌ Incorrect</span>
+        <span class="badge badge-danger"><i data-lucide="x-circle"></i> Incorrect</span>
       {% endif %}
       {% if result.question.topic_tag %}• {{ result.question.topic_tag }}{% endif %}
     </div>
@@ -87,7 +87,7 @@
       " style="cursor:default;">
         <span class="option-key">{{ key }}</span>
         <span>{{ value }}</span>
-        {% if key == result.question.correct_answer %}<span style="margin-left:auto;font-size:0.75rem;font-weight:700;">✓ Correct</span>{% endif %}
+        {% if key == result.question.correct_answer %}<span style="margin-left:auto;font-size:0.75rem;font-weight:700;"><i data-lucide="check"></i> Correct</span>{% endif %}
         {% if key == result.selected and not result.is_correct %}<span style="margin-left:auto;font-size:0.75rem;font-weight:700;">Your answer</span>{% endif %}
       </div>
       {% endfor %}

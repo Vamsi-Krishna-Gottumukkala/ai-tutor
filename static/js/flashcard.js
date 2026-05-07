@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (index === total && endScene) {
       cards.forEach(c => c.style.display = 'none');
       endScene.style.display = 'block';
-      if (counter) counter.textContent = 'Completed ✨';
+      if (counter) {
+        counter.innerHTML = 'Completed <i data-lucide="sparkles"></i>';
+        lucide.createIcons();
+      }
       if (prevBtn) prevBtn.style.display = 'none';
       if (nextBtn) nextBtn.style.display = 'none';
       return;

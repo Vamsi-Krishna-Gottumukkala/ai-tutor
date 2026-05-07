@@ -1,6 +1,6 @@
 {% extends 'admin_panel/base_admin.html' %}
 {% block title %}Manage Subjects{% endblock %}
-{% block page_title %}📚 Manage Subjects{% endblock %}
+{% block page_title %}<i data-lucide="book"></i> Manage Subjects{% endblock %}
 {% block content %}
 <div class="card">
   <div class="table-wrapper">
@@ -18,7 +18,7 @@
           <td>
             <form method="post" action="{% url 'admin_panel:delete_subject' subject.pk %}" class="confirm-delete-form">
               {% csrf_token %}
-              <button class="btn btn-sm btn-danger">🗑 Delete</button>
+              <button class="btn btn-sm btn-danger"><i data-lucide="trash-2"></i> Delete</button>
             </form>
           </td>
         </tr>

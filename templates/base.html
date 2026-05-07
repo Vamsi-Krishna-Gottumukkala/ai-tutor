@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -18,7 +20,7 @@
 <div class="message-container">
   {% for message in messages %}
   <div class="alert alert-{{ message.tags|default:'info' }}" data-auto-dismiss>
-    {% if message.tags == 'success' %}✅{% elif message.tags == 'error' or message.tags == 'danger' %}❌{% elif message.tags == 'warning' %}⚠️{% else %}ℹ️{% endif %}
+    {% if message.tags == 'success' %}<i data-lucide="check-circle"></i>{% elif message.tags == 'error' or message.tags == 'danger' %}<i data-lucide="x-circle"></i>{% elif message.tags == 'warning' %}<i data-lucide="alert-triangle"></i>{% else %}<i data-lucide="info"></i>{% endif %}
     {{ message }}
   </div>
   {% endfor %}
@@ -31,7 +33,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-name">
-        <div class="brand-icon">🎓</div>
+        <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
         AI Tutor
       </div>
     </div>
@@ -53,24 +55,24 @@
     <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
       <a href="{% url 'dashboard:home' %}" class="nav-item {% if request.resolver_match.namespace == 'dashboard' %}active{% endif %}">
-        <span class="nav-icon">📊</span> Dashboard
+        <span class="nav-icon"><i data-lucide="bar-chart-2"></i></span> Dashboard
       </a>
       <a href="{% url 'subjects:list' %}" class="nav-item {% if request.resolver_match.namespace == 'subjects' %}active{% endif %}">
-        <span class="nav-icon">📚</span> My Subjects
+        <span class="nav-icon"><i data-lucide="book"></i></span> My Subjects
       </a>
       <a href="{% url 'assessments:history' %}" class="nav-item {% if request.resolver_match.namespace == 'assessments' %}active{% endif %}">
-        <span class="nav-icon">🧠</span> Quizzes
+        <span class="nav-icon"><i data-lucide="brain"></i></span> Quizzes
       </a>
       <a href="{% url 'chatbot:chat' %}" class="nav-item {% if request.resolver_match.namespace == 'chatbot' %}active{% endif %}">
-        <span class="nav-icon">💬</span> AI Tutor Chat
+        <span class="nav-icon"><i data-lucide="message-circle"></i></span> AI Tutor Chat
       </a>
 
       <div class="nav-section-label" style="margin-top: 0.5rem;">Account</div>
       <a href="{% url 'accounts:profile' %}" class="nav-item">
-        <span class="nav-icon">👤</span> Profile
+        <span class="nav-icon"><i data-lucide="user"></i></span> Profile
       </a>
       <a href="{% url 'accounts:logout' %}" class="nav-item">
-        <span class="nav-icon">🚪</span> Logout
+        <span class="nav-icon"><i data-lucide="log-out"></i></span> Logout
       </a>
     </nav>
 
@@ -84,17 +86,17 @@
 </div>
 
 <!-- Chatbot FAB -->
-<button class="chatbot-fab" id="chatbot-fab" title="Ask AI Tutor">💬</button>
+<button class="chatbot-fab" id="chatbot-fab" title="Ask AI Tutor"><i data-lucide="message-circle"></i></button>
 <input type="hidden" id="chatbot-subject-id" value="{{ current_subject_id|default:'' }}">
 
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chatbot-header">
-    <span class="chatbot-header-title">🤖 AI Tutor Assistant</span>
-    <button id="chatbot-close" style="background:none;border:none;color:white;cursor:pointer;font-size:1.1rem;">✕</button>
+    <span class="chatbot-header-title"><i data-lucide="bot"></i> AI Tutor Assistant</span>
+    <button id="chatbot-close" style="background:none;border:none;color:white;cursor:pointer;font-size:1.1rem;"><i data-lucide="x"></i></button>
   </div>
   <div class="chatbot-messages" id="chatbot-messages">
     <div class="chat-msg assistant">
-      👋 Hi! I'm your AI tutor. Ask me anything about your subjects or topics you're learning!
+      <i data-lucide="hand"></i> Hi! I'm your AI tutor. Ask me anything about your subjects or topics you're learning!
     </div>
   </div>
   <div class="chatbot-input-row">
@@ -110,6 +112,10 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/chatbot.js' %}"></script>
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+</script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>
